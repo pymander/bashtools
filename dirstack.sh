@@ -97,28 +97,18 @@ dl () {
   local dir
   declare -i i=1
 
-  [ $# -le 1 ] || { echo "usage: dir [n]"; return 1; }
-
-  if [ $# -eq 1 ]; then
-    [ $1 -eq $1 ] 2> /dev/null || { echo "usage: dir [n]"; return 1; }
-    i=$[$_DIR-"$1"+1]
-    if [ $i -lt 1 ]; then
-      i=1
-    fi
-  fi
-
   for (( i=1 ; i <= ${#_DL[*]} ; i++ )); do
     dir="${_DL[$i]}"
     echo -n "$i"
     [ $i -eq $_PTR ] && echo -n " *";
     echo -ne "\t"
     case "$dir" in
-      $HOME*)
-        echo "~${dir#$HOME}"
-       ;;
-      *)
-        echo $dir
-        ;;
+        $HOME*)
+            echo "~${dir#$HOME}"
+            ;;
+        *)
+            echo $dir
+            ;;
     esac
   done
 }
