@@ -5,6 +5,7 @@
 
 knownhosts="$HOME/.ssh/known_hosts"
 HOSTFILE=$HOME/.bash/hostfile
+DEFAULT_DOMAIN=leisurenouveau.com
 
 # If our known_hosts file is older than our host file, just ignore it.
 create_hostfile () {
@@ -14,20 +15,28 @@ create_hostfile () {
     cat /dev/null > $HOSTFILE
     for entry in $(cat $knownhosts | awk '{print $1}' | sort | uniq)
     do
-        entry=$(echo $entry | awk -F , '{print $1}')
-        case "$entry" in
-            *.musiciansfriend.com)
-                host=${entry//.musiciansfriend.com/}
-                echo "0.0.0.0 ${entry} ${host}" >> $HOSTFILE
-                ;;
+        fullhost=$(echo $entry | awk -F , '{print $1}')
+        ip=$(echo $entry | awk -F , '{print $2}')
+
+        # Fill out our IP address.
+        if [ "x$ip" == "x" ]
+        then
+            ip="0.0.0.0"
+        fi
+
+        case "$fullhost" in
             *.*)
-                #echo "Matched $entry"
+                host=${fullhost//.*/}
+                echo "${ip} ${fullhost} ${host}" >> $HOSTFILE
                 ;;
             *)
-                echo "0.0.0.0 ${entry}.musiciansfriend.com ${entry}" >> $HOSTFILE
+                echo "${ip} ${host}.${DEFAULT_DOMAIN} ${host}" >> $HOSTFILE
                 ;;
         esac
     done
+
+    # Next we parse the $HOME/.ssh/config file and pull out host definitions.
+    awk '/^host/ { print "0.0.0.0 " $2 " " $2 }' < $HOME/.ssh/config >> $HOSTFILE
 }
 
 # Rebuild our hostfile, if needed.
