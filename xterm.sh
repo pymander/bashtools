@@ -1,7 +1,7 @@
 # Stuff to set an intelligent prompt -- note that all the Aegis stuff
 # has been stripped away.
 
-PROMPTHOST=${PROMPTHOST:-$HOST}
+PROMPTHOST=${PROMPTHOST:-$(hostname -s)}
 
 if [ -n "$PS1" ]; then
 
@@ -12,7 +12,7 @@ if [ -n "$PS1" ]; then
   case "$TERM" in
     *xterm*|*rxvt*)
        PROMPT_COMMAND="prompt"
-       PS1=$"[${_BOLD}\u${_NORM}@${_BOLD}\h${_NORM}:${_BOLD}\w${_NORM}]\\$ "
+       PS1=$"[${_BOLD}\u${_NORM}@${_BOLD}${PROMPTHOST}${_NORM}:${_BOLD}\w${_NORM}]\\$ "
        PS2="> "
        ;;
     *)
@@ -46,8 +46,8 @@ prompt () {
 
   # Set up titles the way I like them.  Include the AEGIS_PROJECT
   # variable, so I can tell what I'm working on!
-  title "$USER@$HOST:$pwd"
-  icon "$USER@$HOST:${pwd##*/}"
+  title "$USER@$PROMPTHOST:$pwd"
+  icon "$USER@$PROMPTHOST:${pwd##*/}"
 }
 
 # End of file.
