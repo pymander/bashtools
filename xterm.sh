@@ -1,7 +1,7 @@
 # Stuff to set an intelligent prompt -- note that all the Aegis stuff
 # has been stripped away.
 
-HOST=tyche
+PROMPTHOST=${PROMPTHOST:-$HOST}
 
 if [ -n "$PS1" ]; then
 
@@ -17,7 +17,7 @@ if [ -n "$PS1" ]; then
        ;;
     *)
        # Because tramp hates my funky prompt, non-xterm logins get the shaft.  :)
-       PS1="[\u@\h:\w]\\$ "
+       PS1="[\u@${PROMPTHOST}:\w]\\$ "
        PS2="> "
        ;;
   esac
