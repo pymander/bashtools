@@ -1,5 +1,5 @@
 #!/bin/bash
-# Bash2 directory history/stack by Erik Arneson <erik@aarg.net>
+# Bash2 directory history/stack by Erik Arneson <dybbuk@lnouv.com>
 #
 # This script wraps the 'cd' command to
 # store a history of recently visited directories.  One can view the
@@ -12,6 +12,13 @@
 # b   --  Back one entry
 # cd  --  Change directory.  If the directory is "," followed by a number,
 #         treat it like 'go'.
+#
+# Set the STARTSTACK environment variable before loading this file to
+# have a startup list of common directories available.  Use something
+# like this:
+#
+#    declare -a STARTSTACK
+#    STARTSTACK=(/home/foobar/projects /etc/foobar)
 #
 # Adapted from some login script somebody sent me long ago, when I was
 # working at Yahoo.
@@ -51,9 +58,21 @@ _cd_hist () {
 
 _init_cd_hist () {
   _DIR=1
-  _PTR=1  
   _LAST_DIR="$PWD"
-  _DL[1]="$PWD"
+
+  # Initialize our stack.
+  if [ ${#STARTSTACK[*]} > 0 ]
+  then
+      for (( i=0; i < ${#STARTSTACK[*]}; i++ ))
+      do
+          _DL[$_DIR]="${STARTSTACK[$i]}"
+          _DIR=$[$_DIR+1]
+      done
+  fi
+
+  # Stick us at the end of the stack in our current directory.
+  _DL[$_DIR]="$PWD"
+  _PTR=$_DIR
 }
 
 # Removes duplicates from our directory stack.  This actually could be
