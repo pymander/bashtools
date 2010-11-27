@@ -61,7 +61,7 @@ _init_cd_hist () {
   _LAST_DIR="$PWD"
 
   # Initialize our stack.
-  if [ ${#STARTSTACK[*]} > 0 ]
+  if [ ${#STARTSTACK[*]} -gt 0 ]
   then
       for (( i=0; i < ${#STARTSTACK[*]}; i++ ))
       do
