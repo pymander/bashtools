@@ -61,7 +61,7 @@ _init_cd_hist () {
   _LAST_DIR="$PWD"
 
   # Initialize our stack.
-  if [ ${#STARTSTACK[*]} > 0 ]
+  if [ ${#STARTSTACK[*]} -gt 0 ]
   then
       for (( i=0; i < ${#STARTSTACK[*]}; i++ ))
       do
@@ -202,11 +202,7 @@ _forward () {
     fi
 }
 
-_cd () {
-  _cd_hist ${0+"$@"}
-}
-
-alias cd='_cd'
+alias cd='_cd_hist'
 alias b='_back'
 alias f='_forward'
 
