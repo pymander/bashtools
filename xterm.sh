@@ -12,7 +12,7 @@ if [ -n "$PS1" ]; then
   case "$TERM" in
     *xterm*|*rxvt*)
        PROMPT_COMMAND="prompt"
-       PS1=$"[${_BOLD}\u${_NORM}@${_BOLD}${PROMPTHOST}${_NORM}:${_BOLD}\w${_NORM}]\\$ "
+       PS1=$"[${_BOLD}\u${_NORM}@${_BOLD}${PROMPTHOST}${_NORM}:${_BOLD}\w${_NORM}\$(git_branch)]\\$ "
        PS2="> "
        ;;
     *)
