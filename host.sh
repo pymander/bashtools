@@ -4,7 +4,7 @@
 # completion with SSH commands.
 
 knownhosts="$HOME/.ssh/known_hosts"
-HOSTFILE=$HOME/.bash/hostfile
+HOSTFILE=$HOME/bashtools/hostfile
 DEFAULT_DOMAIN=leisurenouveau.com
 
 # If our known_hosts file is older than our host file, just ignore it.
