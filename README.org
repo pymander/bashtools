@@ -1,0 +1,27 @@
+#+TITLE: Bashtools - Handy tools for the Bourne Again Shell
+#+LANGUAGE: en
+#+AUTHOR: Erik L. Arneson
+#+EMAIL: earneson@arnesonium.com
+#+KEYWORDS: bash, shell, login, tools
+#+OPTIONS: num:nil
+
+* How To Use
+
+  First, make sure the repository is in the =bashtools= directory off
+  of =$HOME=. Then stick the following into =$HOME/.profile= and log
+  in again.
+
+#+begin_src shell-script
+  # Set to 1 for verbose, or 0 for quiet.
+  VERBOSE=1
+  
+  if [ -d "$HOME/bashtools" ]
+  then
+      for file in "$HOME/bashtools/"*.sh
+      do
+          test 1 -eq $VERBOSE && echo -n "Loading $file ... "
+          source $file
+          test 1 -eq $VERBOSE && echo "done"
+      done
+  fi
+#+end_src
