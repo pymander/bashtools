@@ -25,3 +25,14 @@
       done
   fi
 #+end_src
+
+* Stuff That Isn't Mine
+
+  There is some code here that isn't really mine. Most notably,
+  =cabal.sh= was copied from [[https://www.haskell.org/cabal/][The Haskell Cabal]]. Little snippets here
+  and there were probably picked up from coworkers, fellow hackers,
+  and shell-scripting weirdos along the way.
+
+  As a result, I can't really claim a license on any of this stuff. Is
+  that bad? I'm not sure. Just take a look, learn from it, and use
+  this code to do other cool things with your favorite shell.
