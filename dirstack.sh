@@ -26,6 +26,7 @@
 # Declare our _DL variable as an array.
 declare -a _DL
 declare -i _STACK_SIZE=50
+declare -i _CD_CTR=0
 
 ## directory history ##
 _cd_hist () {
@@ -54,6 +55,14 @@ _cd_hist () {
       esac
       ;;
   esac
+
+  _CD_CTR=$(( $_CD_CTR + 1 ))
+
+  if [ 10 -lt $_CD_CTR ]
+  then
+      _clean_cd_hist
+      _CD_CTR=0
+  fi
 }
 
 _init_cd_hist () {
