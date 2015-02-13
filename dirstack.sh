@@ -7,11 +7,11 @@
 # forward and backward on the history stack.
 #
 # dl  --  Display history stack
-# go  --  Go directly to an entry on the stack using a number or name.
+# jmp --  Go directly to an entry on the stack using a number or name.
 # f   --  Forward one entry
 # b   --  Back one entry
 # cd  --  Change directory.  If the directory is "," followed by a number,
-#         treat it like 'go'.
+#         treat it like 'jmp'.
 #
 # Set the STARTSTACK environment variable before loading this file to
 # have a startup list of common directories available.  Use something
@@ -32,7 +32,7 @@ declare -i _CD_CTR=0
 _cd_hist () {
   case "$1" in
     ,*)
-      go "${1#,}"
+      jmp "${1#,}"
       ;;
     *)
       if [ "x$1" = "x" ]; then
@@ -118,7 +118,7 @@ _clean_cd_hist () {
     _PTR=$_DIR
     _LAST_DIR="${_DL[$_DIR]}"
     IFS="$old_ifs"
-    go "$PWD"
+    jmp "$PWD"
 }
          
 dl () {
@@ -141,12 +141,12 @@ dl () {
   done
 }
 
-go () {
+jmp () {
     declare -i i=$_DIR
   
     local dir 
       
-    [ $# -eq 1 ] || go $HOME;
+    [ $# -eq 1 ] || jmp $HOME;
 
     command test "$1" -gt 0 -a "$1" -le $_DIR 2>/dev/null
     if [ $? -eq 0 ]; then
@@ -164,7 +164,7 @@ go () {
             case "$dir/" in
                 *"$1"|*"$1"/)
                     found=1
-                    go $i
+                    jmp $i
                     break
                     ;;
             esac
