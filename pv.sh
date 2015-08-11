@@ -7,13 +7,21 @@ cpv () {
     IN="$1"
     OUT="$2"
 
+    if [ -d "$OUT" ]
+    then
+        infile=${IN##*/}
+        OUT="$OUT/$infile"
+    fi
+    
     if [ -r "$IN" ]
     then
         pv "$IN" > "$OUT"
+    else
+        echo "Cannot read from $IN"
     fi
 }
 
-# Save move with a progress bar.
+# Safe move with a progress bar.
 mpv () {
     IN="$1"
     OUT="$2"
@@ -22,6 +30,12 @@ mpv () {
     then
         echo "mpv SOURCE DEST"
         echo "  (Careful! One file only)"
+    fi
+
+    if [ -d "$OUT" ]
+    then
+        infile=${IN##*/}
+        OUT="$OUT/$infile"
     fi
 
     if [ -r "$IN" ]
