@@ -36,7 +36,10 @@ create_hostfile () {
     done
 
     # Next we parse the $HOME/.ssh/config file and pull out host definitions.
-    awk '/^host/ { print "0.0.0.0 " $2 " " $2 }' < $HOME/.ssh/config >> $HOSTFILE
+    if [ -f $HOME/.ssh/config ]
+    then
+        awk '/^host/ { print "0.0.0.0 " $2 " " $2 }' < $HOME/.ssh/config >> $HOSTFILE
+    fi
 }
 
 # Rebuild our hostfile, if needed.
